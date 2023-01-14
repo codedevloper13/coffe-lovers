@@ -20,6 +20,18 @@
     color: rgba(249, 250, 251, 1);
 }
 
+.span1 {
+    color: #f1c40f;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.span2 {
+    color: #2980b9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .title2 {
     display: block;
     color: var(--text-purple);
@@ -27,14 +39,15 @@
 
 .subTitle {
     margin-top: 0.75rem;
-    font-size: 1.5rem
+    text-transform: uppercase;
+    font-size: 1.3rem
         /* 24px */
     ;
     line-height: 2rem
         /* 32px */
     ;
 
-    color: var(--text-white-100);
+    color: var(--text-black-100);
 }
 
 .buttonWrapper {
@@ -47,7 +60,8 @@
     color: white;
     outline: 0;
     border: 0px;
-
+    text-transform: uppercase;
+    letter-spacing: 1px;
     padding-top: 1rem
         /* 16px */
     ;

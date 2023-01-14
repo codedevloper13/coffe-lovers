@@ -20,6 +20,9 @@ export default function Home() {
 
 			<main className={styles.main}>
 				<Banner buttonText='View Stores Nearby' handleOnClick={handleOnBannerBtnClick} />
+				<div className={styles.heroImage}>
+					<Image src='/static/hero-banner.png' alt='banner' width={700} height={300} />
+				</div>
 			</main>
 		</div>
 	);
