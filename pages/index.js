@@ -4,6 +4,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Banner from "../components/banner";
+import Card from "../components/Card";
+import CoffeeStores from "../data/coffee-stores.json";
 
 export default function Home() {
 	const handleOnBannerBtnClick = () => {
@@ -22,6 +24,11 @@ export default function Home() {
 				<Banner buttonText='View Stores Nearby' handleOnClick={handleOnBannerBtnClick} />
 				<div className={styles.heroImage}>
 					<Image src='/static/hero-banner.png' alt='banner' width={700} height={300} />
+				</div>
+				<div className={styles.cardLayout}>
+					{CoffeeStores.map((CoffeeStore) => {
+						return <Card key={CoffeeStore.id} className={styles.card} name={CoffeeStore.name} imgUrl={CoffeeStore.imgUrl} href={`/coffee-store/${CoffeeStore.id}`} />;
+					})}
 				</div>
 			</main>
 		</div>

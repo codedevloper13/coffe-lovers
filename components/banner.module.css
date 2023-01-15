@@ -22,12 +22,14 @@
 
 .span1 {
     color: #f1c40f;
+    font-family: 'Satisfy', cursive;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .span2 {
     color: #2980b9;
+    font-family: 'Satisfy', cursive;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
