@@ -16,13 +16,15 @@ export async function getStaticProps(context) {
 		},
 	};
 
-	fetch("https://api.foursquare.com/v3/places/search", options)
-		.then((response) => response.json())
-		.then((response) => console.log(response))
-		.catch((err) => console.error(err));
+	const response = await fetch ("https://api.foursquare.com/v3/places/search?query=coffee&ll=23.119520169890254%2C72.57985903467701&limit=9", options);
+	const data = await response.json();
+
+	// .then((response) => response.json())
+	// .then((response) => console.log(response))
+	// .catch((err) => console.error(err));
 	return {
 		props: {
-			CoffeeStores: CoffeeStoresData,
+			CoffeeStores: data.results,
 		},
 	};
 }
@@ -47,16 +49,19 @@ export default function Home(props) {
 				</div>
 				{props.CoffeeStores.length > 0 && (
 					<>
-						<h2 className={styles.headingtwo}>Torronto Stores</h2>
+						<h2 className={styles.headingtwo}>Chandkheda Stores</h2>
 						<div className={styles.cardLayout}>
 							{props.CoffeeStores.map((CoffeeStore) => {
 								return (
 									<Card
-										key={CoffeeStore.id}
+										key={CoffeeStore.fsq_id}
 										className={styles.card}
 										name={CoffeeStore.name}
-										imgUrl={CoffeeStore.imgUrl}
-										href={`/coffee-store/${CoffeeStore.id}`}
+										imgUrl={
+											CoffeeStore.imgUrl ||
+											"https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80"
+										}
+										href={`/coffee-store/${CoffeeStore.fsq_id}`}
 									/>
 								);
 							})}
