@@ -8,6 +8,18 @@ import Card from "../components/Card";
 import CoffeeStoresData from "../data/coffee-stores.json";
 
 export async function getStaticProps(context) {
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization: "fsq3Vb/kHNyYdLgRIqC3pp/oPxjbH8yx8Pfvep4i8VETcH0=",
+		},
+	};
+
+	fetch("https://api.foursquare.com/v3/places/search", options)
+		.then((response) => response.json())
+		.then((response) => console.log(response))
+		.catch((err) => console.error(err));
 	return {
 		props: {
 			CoffeeStores: CoffeeStoresData,
