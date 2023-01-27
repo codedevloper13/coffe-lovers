@@ -112,14 +112,12 @@
     padding-left: 0.5rem
         /* 8px */
     ;
-    font-size: 1.5rem
+    font-size: 23px
         /* 24px */
     ;
-    line-height: 1rem
-        /* 32px */
-    ;
-    margin: 3px;
-    font-weight: 700;
+    line-height: 2rem;
+
+    font-weight: 400;
 }
 
 .upvoteButton {
