@@ -20,7 +20,7 @@ export async function getStaticProps(context) {
 
 export default function Home(props) {
 	const handleOnBannerBtnClick = () => {
-		alert("hello");
+		//handleTrackLocation();
 	};
 
 	return (
