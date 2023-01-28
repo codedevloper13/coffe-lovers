@@ -8,6 +8,8 @@ import Card from "../components/Card";
 //import CoffeeStoresData from "../data/coffee-stores.json";
 import { fetchCooffeStores } from "../lib/coffee-stores";
 
+import UserTrackLocation from "../hooks/user-track-locations.js";
+
 export async function getStaticProps(context) {
 	const CoffeeStores = await fetchCooffeStores();
 
@@ -19,8 +21,11 @@ export async function getStaticProps(context) {
 }
 
 export default function Home(props) {
+	const { LatLong, handleTrackLocation, locationErrMsg } = UserTrackLocation();
+
+	console.log({ LatLong, locationErrMsg });
 	const handleOnBannerBtnClick = () => {
-		//handleTrackLocation();
+		handleTrackLocation();
 	};
 
 	return (
