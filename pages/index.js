@@ -1,13 +1,13 @@
 /** @format */
 
 import Head from "next/head";
+import { useEffect } from "react";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Banner from "../components/banner";
 import Card from "../components/Card";
 //import CoffeeStoresData from "../data/coffee-stores.json";
 import { fetchCooffeStores } from "../lib/coffee-stores";
-
 import UserTrackLocation from "../hooks/user-track-locations.js";
 
 export async function getStaticProps(context) {
@@ -22,8 +22,24 @@ export async function getStaticProps(context) {
 
 export default function Home(props) {
 	const { LatLong, handleTrackLocation, locationErrMsg, isFindingLocation } = UserTrackLocation();
+
+	useEffect(() => {
+		async function setCoffeeStoresByLocation() {
+			if (LatLong) {
+				try {
+					const fetchedCoffeeStores = await fetchCooffeStores(LatLong ,30);
+					console.log({ fetchedCoffeeStores });
+				} catch (error) {
+					console.log({ error });
+				}
+			}
+		}
+		setCoffeeStoresByLocation();
+	}, [LatLong]);
+
 	const handleOnBannerBtnClick = () => {
 		handleTrackLocation();
+		
 	};
 
 	return (
