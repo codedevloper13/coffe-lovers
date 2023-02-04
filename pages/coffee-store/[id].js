@@ -12,11 +12,12 @@ import { fetchCooffeStores } from "../../lib/coffee-stores";
 export async function getStaticProps(staticProps) {
 	const CoffeeStores = await fetchCooffeStores();
 	const params = staticProps.params;
+	const CoffeeStoresById = CoffeeStores.find((coffeeStore) => {
+		return coffeeStore.id.toString() === params.id; //dynamic id
+	});
 	return {
 		props: {
-			coffeeStore: CoffeeStores.find((coffeeStore) => {
-				return coffeeStore.id.toString() === params.id; //dynamic id
-			}),
+			coffeeStore: CoffeeStoresById ? CoffeeStoresById : {},
 			revalidate: 10,
 		},
 	};
@@ -72,7 +73,7 @@ const CoffeeStore = (props) => {
 						width={600}
 						height={360}
 						className={styles.storeImgWrapper}
-						alt={name}
+						alt={name || "alt"} 
 					/>
 				</div>
 
@@ -83,7 +84,7 @@ const CoffeeStore = (props) => {
 					</div>
 					<div className={styles.iconWrapper}>
 						<Image src='/static/icons/nearMe.svg' width='24' height='24' alt='' />
-						<p className={styles.text}>{locality }</p>
+						<p className={styles.text}>{locality}</p>
 					</div>
 					<div className={styles.iconWrapper}>
 						<Image src='/static/icons/star.svg' width='24' height='24' alt='' />

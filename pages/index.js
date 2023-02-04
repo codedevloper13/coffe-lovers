@@ -9,6 +9,7 @@ import Card from "../components/Card";
 //import CoffeeStoresData from "../data/coffee-stores.json";
 import { fetchCooffeStores } from "../lib/coffee-stores";
 import UserTrackLocation from "../hooks/user-track-locations.js";
+import { useState } from "react";
 
 export async function getStaticProps(context) {
 	const CoffeeStores = await fetchCooffeStores();
@@ -23,14 +24,17 @@ export async function getStaticProps(context) {
 export default function Home(props) {
 	const { LatLong, handleTrackLocation, locationErrMsg, isFindingLocation } = UserTrackLocation();
 
+	const [CoffeeStores, setCoffeeStores] = useState("");
+	const [Error, setError] = useState(null);
 	useEffect(() => {
 		async function setCoffeeStoresByLocation() {
 			if (LatLong) {
 				try {
-					const fetchedCoffeeStores = await fetchCooffeStores(LatLong ,30);
-					console.log({ fetchedCoffeeStores });
+					const fetchedCoffeeStores = await fetchCooffeStores(LatLong, 30);
+					setCoffeeStores(fetchedCoffeeStores);
 				} catch (error) {
-					console.log({ error });
+					//console.log({ error });
+					setError(error);
 				}
 			}
 		}
@@ -39,7 +43,6 @@ export default function Home(props) {
 
 	const handleOnBannerBtnClick = () => {
 		handleTrackLocation();
-		
 	};
 
 	return (
@@ -53,9 +56,33 @@ export default function Home(props) {
 			<main className={styles.main}>
 				<Banner buttonText={isFindingLocation ? "Locating..." : "View Stores Nearby"} handleOnClick={handleOnBannerBtnClick} />
 				{locationErrMsg && <p>Something Went Wrong:{locationErrMsg}</p>}
+				{Error && <p>Something Went Wrong:{Error}</p>}
 				<div className={styles.heroImage}>
 					<Image src='/static/hero-banner.png' alt='banner' width={700} height={300} />
 				</div>
+
+				{CoffeeStores.length > 0 && (
+					<div className={styles.sectionWrapper}>
+						<h2 className={styles.headingtwo}>Near My Stores</h2>
+						<div className={styles.cardLayout}>
+							{CoffeeStores.map((CoffeeStore) => {
+								return (
+									<Card
+										key={CoffeeStore.id}
+										className={styles.card}
+										name={CoffeeStore.name}
+										imgUrl={
+											CoffeeStore.imgUrl ||
+											"https://images.unsplash.com/photo-1498804103079-a6351b050096?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80"
+										}
+										href={`/coffee-store/${CoffeeStore.id}`}
+									/>
+								);
+							})}
+						</div>
+					</div>
+				)}
+
 				{props.CoffeeStores.length > 0 && (
 					<div className={styles.sectionWrapper}>
 						<h2 className={styles.headingtwo}>Chandkheda Stores</h2>
